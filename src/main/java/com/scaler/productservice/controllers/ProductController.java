@@ -1,6 +1,8 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.service.ProductService;
 import models.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
+    private ProductService productService;
+
+   // @Autowired    <-- not required
+    public ProductController(ProductService productService){
+        this.productService = productService;
+    }
 
     @GetMapping("/{id}")
     public Product getSingleProduct(@PathVariable("id") Long id){
