@@ -28,7 +28,7 @@ public class ProductController {
     // If the incoming request is a get call then the respective method will be triggerred. If the incoming method is a post call the n the respective method gets triggered.
     @GetMapping("/")
     public List<Product> getAllProducts(){
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
 
     // Note: When we have the same mapping signature the method will be called based on the http type of the method. Ex: Get, Post ...

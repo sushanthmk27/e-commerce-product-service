@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,14 +25,38 @@ public class FakeStoreProductService implements ProductService{
     public Product getSingleProduct(Long productId) {
       //  /*RestTemplate restTemplate = new RestTemplate();*/
 
-        ResponseEntity<ProductServiceResponseDTO> responseDto = restTemplate.getForEntity("https://fakestoreapi.com/products/" + productId, ProductServiceResponseDTO.class);
+        ResponseEntity<ProductServiceResponseDTO> responseDto = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products/" + productId,
+                    ProductServiceResponseDTO.class);
         ProductServiceResponseDTO productServiceResponseDTO = responseDto.getBody();
         return convertToProduct(productServiceResponseDTO);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        //This gives us error due to the concept of Generics Type Erasure during runtime
+        /*ResponseEntity<List<ProductServiceResponseDTO>> response = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products",
+                List<ProductServiceResponseDTO>.class          <-- This is not allowed
+        );*/
+
+        /*ResponseEntity<List> response = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products",
+                List.class      <-- This is not a good practice as this is not type safe and can cause compile time errors
+        );*/
+
+        ResponseEntity<ProductServiceResponseDTO[]> response = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products",
+                ProductServiceResponseDTO[].class       // <- In this scenario its a good practice to use Array rather than List
+        );
+        ProductServiceResponseDTO[] productResponseArr = response.getBody();
+        List<Product> responseList = new ArrayList<>();
+        if (productResponseArr != null) {
+            for(ProductServiceResponseDTO productServiceResponseDTO : productResponseArr){
+                responseList.add(convertToProduct(productServiceResponseDTO));
+            }
+        }
+        return responseList;
     }
 
     @Override
