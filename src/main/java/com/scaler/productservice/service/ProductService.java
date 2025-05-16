@@ -1,6 +1,6 @@
 package com.scaler.productservice.service;
 
-import models.Product;
+import com.scaler.productservice.models.Product;
 
 import java.util.List;
 

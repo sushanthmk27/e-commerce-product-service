@@ -1,8 +1,7 @@
 package com.scaler.productservice.controllers;
 
 import com.scaler.productservice.service.ProductService;
-import models.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.scaler.productservice.models.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

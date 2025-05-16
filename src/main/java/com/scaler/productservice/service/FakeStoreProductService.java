@@ -1,11 +1,9 @@
 package com.scaler.productservice.service;
 
 import com.scaler.productservice.dto.ProductServiceResponseDTO;
-import models.Category;
-import models.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.scaler.productservice.models.Category;
+import com.scaler.productservice.models.Product;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
