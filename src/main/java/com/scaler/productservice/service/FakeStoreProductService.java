@@ -1,7 +1,10 @@
 package com.scaler.productservice.service;
 
+import com.scaler.productservice.dto.ProductServiceResponseDTO;
+import models.Category;
 import models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,7 +15,7 @@ import java.util.List;
 //@Component   <-- Can be used since this is a Super to @Service
 public class FakeStoreProductService implements ProductService{
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
@@ -22,8 +25,9 @@ public class FakeStoreProductService implements ProductService{
     public Product getSingleProduct(Long productId) {
       //  /*RestTemplate restTemplate = new RestTemplate();*/
 
-        restTemplate.getForEntity("https://fakestoreapi.com/products" +productId, Product.class);
-        return null;
+        ResponseEntity<ProductServiceResponseDTO> responseDto = restTemplate.getForEntity("https://fakestoreapi.com/products/" + productId, ProductServiceResponseDTO.class);
+        ProductServiceResponseDTO productServiceResponseDTO = responseDto.getBody();
+        return convertToProduct(productServiceResponseDTO);
     }
 
     @Override
@@ -50,4 +54,25 @@ public class FakeStoreProductService implements ProductService{
     public boolean replaceProduct(Long productId) {
         return false;
     }
+
+    //This method is used to convert the incoming responseDto to the respective Product mapping
+    private static Product convertToProduct(ProductServiceResponseDTO productServiceResponseDTO){
+        if(productServiceResponseDTO == null){
+            return null;
+        }
+        // Convert ProductServiceResponseDTO to Product
+        Product product = new Product();
+        product.setId(productServiceResponseDTO.getId());
+        product.setTitle(productServiceResponseDTO.getTitle());
+        product.setPrice(productServiceResponseDTO.getPrice());
+        product.setDescription(productServiceResponseDTO.getDescription());
+        product.setImage(productServiceResponseDTO.getImage());
+
+        Category category = new Category();
+        category.setCategoryName(productServiceResponseDTO.getCategory());
+
+        product.setCategory(category);
+        return product;
+    }
+
 }

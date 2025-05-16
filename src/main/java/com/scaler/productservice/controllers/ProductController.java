@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
    // @Autowired    <-- not required
     public ProductController(ProductService productService){
@@ -22,7 +22,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getSingleProduct(@PathVariable("id") Long id){
-        return new Product();
+        return productService.getSingleProduct(id);
     }
 
     // Note: When we have the same mapping signature, the method will be called based on the http type of the method. Ex: Get, Post ...
@@ -40,16 +40,16 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long prodId){
-
+        return null;
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable("id") Long prodId){
-
+        return null;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> replaceProduct(@PathVariable("id") Long productId){
-
+        return null;
     }
 }
