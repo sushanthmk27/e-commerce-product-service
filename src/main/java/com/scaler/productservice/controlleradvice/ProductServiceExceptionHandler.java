@@ -1,6 +1,6 @@
 package com.scaler.productservice.controlleradvice;
 
-import com.scaler.productservice.dto.ExceptionDTO;
+import com.scaler.productservice.dto.ExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ProductServiceExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionDTO> handleRuntimeException(){
-        ExceptionDTO exceptionDTO = new ExceptionDTO();
+    public ResponseEntity<ExceptionDto> handleRuntimeException(){
+        ExceptionDto exceptionDTO = new ExceptionDto();
         exceptionDTO.setErrorCode("404");
         exceptionDTO.setErrorMessage("Product Not Found");
         exceptionDTO.setResolution("Please check the product ID");
