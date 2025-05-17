@@ -4,6 +4,10 @@ import com.scaler.productservice.models.Product;
 
 import java.util.List;
 
+/**
+ * The ProductService interface defines methods for managing products.
+ * It provides methods to retrieve, create, delete, update, and replace products.
+ */
 public interface ProductService {
 
      Product getSingleProduct(Long id);
