@@ -17,12 +17,11 @@ import java.util.List;
  * and placeholder methods for creating, deleting, updating,
  * and replacing products.
  */
-@Service
+@Service("fakeStoreProductService")
 //@Component   <-- Can be used since this is a Super to @Service
 public class FakeStoreProductService implements ProductService{
 
     private final RestTemplate restTemplate;
-
 
     public FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;

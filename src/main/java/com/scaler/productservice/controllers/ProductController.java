@@ -2,6 +2,7 @@ package com.scaler.productservice.controllers;
 
 import com.scaler.productservice.service.ProductService;
 import com.scaler.productservice.models.Product;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
    // @Autowired    <-- not required
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("selfProductService") ProductService productService){
         this.productService = productService;
     }
 
